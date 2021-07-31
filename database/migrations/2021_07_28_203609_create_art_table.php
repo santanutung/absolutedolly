@@ -19,8 +19,7 @@ class CreateArtTable extends Migration
             $table->string('art_id')->default(0);
             $table->string('item_id')->default(0);
             $table->string('main_images')->default(0);
-            $table->string('extra_images')->default(0);
-
+            $table->text('extra_images')->default(0);
 
 
             $table->text('description');
