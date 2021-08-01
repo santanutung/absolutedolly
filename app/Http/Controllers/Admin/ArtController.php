@@ -42,11 +42,11 @@ class ArtController extends Controller
     public function store(Request $request)
     {
 
-
-
         $request->validate([
             'name' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'item_id'=> 'required',
+            'category'=> 'required'
         ]);
 
         $slug = str_slug($request->name);
@@ -80,7 +80,7 @@ class ArtController extends Controller
             "materia_used_painting" => $request->materia_used_painting ?? 0,
             "main_images" => $imageName,
 
-        ]);
+        ])->catagorys()->attach($request->category);
 
         if ($request->extra_images) {
             foreach ($request->extra_images as $key => $extra_image) {
@@ -112,6 +112,7 @@ class ArtController extends Controller
     public function show(Art $art)
     {
         return view('admin.arts.show', compact('art'));
+
     }
 
     /**
@@ -122,7 +123,9 @@ class ArtController extends Controller
      */
     public function edit(Art $art)
     {
-        return view('admin.arts.form', compact('art'));
+       
+        $categories = Category::where('deleted', 0)->orderBy('id', 'desc')->get();
+        return view('admin.arts.form', compact('art', 'categories'));
     }
 
     /**
@@ -138,7 +141,9 @@ class ArtController extends Controller
         $request->physical_art_delivery_time;
         $request->validate([
             'name' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'item_id' => 'required',
+            'category' => 'required'
         ]);
 
         $slug = str_slug($request->name);
@@ -223,6 +228,7 @@ class ArtController extends Controller
             "extra_images" => $extra_images_save_name
         ]);
 
+        $art->catagorys()->sync($request->category);
         //  $post->categories()->attach($request->categories);
 
 

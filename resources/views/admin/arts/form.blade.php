@@ -30,17 +30,14 @@
                         @method('PUT')
                     @endif
                     <fieldset>
-                        <div class="form-group   @error('name') has-error @enderror" value="{{ $art->name ?? '' }}">
-                            <label class="col-md-3 control-label" for="val_art_name">Name <span
-                                    class="text-danger">*</span></label>
+                        <div class="form-group   @error('name') has-error @enderror" >
+                            <label class="col-md-3 control-label" for="val_art_name">Name <span class="text-danger">*</span></label>
                             <div class="col-md-5">
-
                                 <input type="text" id="val_art_name" name="name" class="form-control"
                                     placeholder="Enter name.." value="{{ $art->name ?? '' }}">
                                 @error('name')
                                     <span class="help-block">{{ $message }}</span>
                                 @enderror
-
                             </div>
                         </div>
                         <div class="form-group   @error('main_images') has-error @enderror"
@@ -154,18 +151,31 @@
 
                             </div>
                         </div>
-                        {{-- <div class="form-group">
-                            <label class="col-md-3 control-label" for="example-select">Category</label>
+                        <div class="form-group  @error('category') has-error @enderror">
+                            <label class="col-md-3 control-label" for="category">Category</label>
                             <div class="col-md-5">
-                                <select id="example-select" name="example-select" class="form-control" size="1">
+                                <select id="category" name="category" class="form-control" size="1">
                                     <option value="0" disabled>Please select</option>
                                     @foreach ($categories as $categorie)
-                                        <option value="{{ $categorie->id }}">{{ $categorie->name }}</option>
+                                        <option
+
+
+                                        @isset($art)
+                                            @if($art->catagorys[0]['id']==$categorie->id)
+                                                    selected
+                                            @endif
+                                        @endisset
+
+
+                                        value="{{ $categorie->id }}">{{ $categorie->name }}</option>
                                     @endforeach
                                 </select>
+                                @error('category')
+                                        <span class="help-block">{{ $message }}</span>
+                                    @enderror
                             </div>
-                        </div> --}}
-                        <div class="form-group">
+                        </div>
+                        <div class="form-group @error('description') has-error @enderror">
                             <label class="col-md-3 control-label" for="art_description">Description
                                 <span class="text-danger">*</span>
 
@@ -173,7 +183,11 @@
                             <div class="col-md-7">
                                 <textarea id="art_description" name="description" rows="9" class="form-control"
                                     placeholder="Description..">{{ $art->description ?? '' }}</textarea>
+                                @error('description')
+                                    <span class="help-block">{{ $message }}</span>
+                                @enderror
                             </div>
+
                         </div>
 
                         <div class="form-group">

@@ -101,7 +101,7 @@ var FormsValidation = function() {
                     val_number: 'Please enter a number!',
                     val_range: 'Please enter a number between 1 and 1000!',
                     val_terms: 'You must agree to the service terms!',
-                    val_category: { required: 'Please enter a category name' },
+                    val_category: { required: 'Please enter a category 1 name' },
                     val_art_name: { required: 'Please enter a category name' }
 
                 }

@@ -27,7 +27,7 @@
                     @endif
                     <fieldset>
                         <div class="form-group   @error('category') has-error @enderror"
-                                    value="{{ $role->name ?? '' }}">
+                                   >
                             <label class="col-md-4 control-label" for="val_category">Name <span
                                     class="text-danger">*</span></label>
                             <div class="col-md-6">
