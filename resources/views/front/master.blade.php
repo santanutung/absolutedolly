@@ -11,7 +11,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 	<link href="https://fonts.googleapis.com/css?family=Merriweather:300,300i,400,400i,700,700i,900,900i|Poppins:300,400,500,600,700" rel="stylesheet">
-	
+
 	<link rel="stylesheet" type="text/css" href="{{ asset('/') }}frontend/css/bootstrap.min.css" media="screen">
 	<link rel="stylesheet" type="text/css" href="{{ asset('/') }}frontend/css/magnific-popup.css" media="screen">
 	<link rel="stylesheet" type="text/css" href="{{ asset('/') }}frontend/css/font-awesome.min.css" media="screen">
@@ -27,7 +27,22 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('/') }}frontend/css/font-icons.css" media="screen">
 	<link rel="stylesheet" type="text/css" href="{{ asset('/') }}frontend/css/sliders.css" media="screen">
 	<link rel="stylesheet" type="text/css" href="{{ asset('/') }}frontend/css/style.css" media="screen">
-	<link rel="stylesheet" type="text/css" href="{{ asset('/') }}frontend/css/style2.css" media="screen">	
+	<link rel="stylesheet" type="text/css" href="{{ asset('/') }}frontend/css/style2.css" media="screen">
+	@stack('css')
+	<style>
+		a.size-s {
+    width: 88px;
+}
+
+a.size-s.selected {
+    color: white;
+    background: black;
+}
+a.size-s:hover {
+	color: white;
+    background:#383838;
+}
+	</style>
 
 </head>
 <body>
@@ -59,7 +74,7 @@
 							<li><a href="blog.html">Blog</a></li>
 							<li><a href="contact.html">Contact</a></li>
 							<li><a href="product.html">Product</a></li>
-							<li><a href="{{ route('single-product') }}">Single Product</a></li>
+							<li><a href="{{ route('art') }}">Single Product</a></li>
 							<li><a href="{{ route('cart') }}">Cart</a></li>
 							<li><a href="{{ route('checkout') }}">Checkout</a></li>
 							<li><a class="open-menu" href="#"><i class="fa fa-bars" aria-hidden="true"></i></a></li>
@@ -72,7 +87,7 @@
 
         @yield('content')
 
-		<!-- footer 
+		<!-- footer
 			================================================== -->
 		<footer>
 			<div class="up-footer">
@@ -155,7 +170,7 @@
 	</div>
 	<!-- End Container -->
 
-	
+
 	<script type="text/javascript" src="{{ asset('/') }}frontend/js/jquery.min.js"></script>
 	<script type="text/javascript" src="{{ asset('/') }}frontend/js/jquery.migrate.js"></script>
 	<script type="text/javascript" src="{{ asset('/') }}frontend/js/jquery.magnific-popup.min.js"></script>
@@ -164,17 +179,17 @@
   	<script type="text/javascript" src="{{ asset('/') }}frontend/js/jquery.isotope.min.js"></script>
 	<script type="text/javascript" src="{{ asset('/') }}frontend/js/retina-1.1.0.min.js"></script>
 
-    
-		
+
+
 	<!-- REVOLUTION JS FILES -->
 	<script type="text/javascript" src="{{ asset('/') }}frontend/js/jquery.themepunch.tools.min.js"></script>
 	<script type="text/javascript" src="{{ asset('/') }}frontend/js/jquery.themepunch.revolution.min.js"></script>
 
     <script type="text/javascript" src="{{ asset('/') }}frontend/js/plugins.js"></script>
 
-	<!-- SLIDER REVOLUTION 5.0 EXTENSIONS  
-		(Load Extensions only on Local File Systems !  
-		The following part can be removed on Server for On Demand Loading) -->	
+	<!-- SLIDER REVOLUTION 5.0 EXTENSIONS
+		(Load Extensions only on Local File Systems !
+		The following part can be removed on Server for On Demand Loading) -->
 	<script type="text/javascript" src="{{ asset('/') }}frontend/js/extensions/revolution.extension.actions.min.js"></script>
 	<script type="text/javascript" src="{{ asset('/') }}frontend/js/extensions/revolution.extension.carousel.min.js"></script>
 	<script type="text/javascript" src="{{ asset('/') }}frontend/js/extensions/revolution.extension.kenburn.min.js"></script>
@@ -185,10 +200,10 @@
 	<script type="text/javascript" src="{{ asset('/') }}frontend/js/extensions/revolution.extension.slideanims.min.js"></script>
 	<script type="text/javascript" src="{{ asset('/') }}frontend/js/extensions/revolution.extension.video.min.js"></script>
 
-    
+
 	<script type="text/javascript" src="{{ asset('/') }}frontend/js/script.js"></script>
     <script type="text/javascript" src="{{ asset('/') }}frontend/js/scripts.js"></script>
 
-	
+@stack('js')
 </body>
 </html>

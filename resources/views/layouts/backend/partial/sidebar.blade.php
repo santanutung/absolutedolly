@@ -4,10 +4,18 @@
                 class="sidebar-nav-mini-hide">Dashboard</span></a>
     </li>
      <li>
-
         <a href="{{route('admin.categories.index')}}"><i class="fa fa-list-alt sidebar-nav-icon"></i><span
                 class="sidebar-nav-mini-hide">Category</span></a>
     </li>
+    <li>
+        <a href="{{route('admin.sliders.index')}}"><i class="fa fa-list-alt sidebar-nav-icon"></i><span
+                class="sidebar-nav-mini-hide">Slider</span></a>
+    </li>
+     <li>
+        <a href="{{route('admin.news.index')}}"><i class="fa fa-list-alt sidebar-nav-icon"></i><span
+                class="sidebar-nav-mini-hide">News</span></a>
+    </li>
+
     <li>
 
         <a href="{{route('admin.arts.index')}}"><i class="fa fa-list-alt sidebar-nav-icon"></i><span

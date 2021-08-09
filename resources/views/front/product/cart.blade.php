@@ -3,6 +3,9 @@
 @section('title')
 Cart
 @endsection
+@push('css')
+
+@endpush
 
 @section('content')
 
@@ -11,7 +14,7 @@ Cart
         <div class="container relative clearfix">
         <div class="title-holder">
             <div class="title-text">
-            <h1 class="uppercase">Shopping Cart</h1>
+            <h1 class="uppercase"> Cart</h1>
             <ol class="breadcrumb">
                 <li>
                 <a href="index.html">Home</a>
@@ -29,42 +32,46 @@ Cart
     </section>
 
 
+
     <!-- Cart -->
   <section class="section-wrap shopping-cart">
     <div class="container relative">
       <div class="row">
 
         <div class="col-md-12">
-          <div class="table-wrap mb-30">
-            <table class="shop_table cart table">
+           <div class="table-wrap mb-30">
+            <h3 class="uppercase">  Digital</h3>
+             <table class="shop_table cart table">
               <thead>
                 <tr>
-                  <th class="product-name" colspan="2">Product</th>
+                  <th class="product-name" colspan="2">Art</th>
                   <th class="product-price">Price</th>
                   <th class="product-quantity">Quantity</th>
                   <th class="product-subtotal" colspan="2">Total</th>
                 </tr>
               </thead>
               <tbody>
+                @foreach ($digital_items as $digital_item )
+                {{-- {{dd($digital_item->qty)}} --}}
                 <tr class="cart_item">
                   <td class="product-thumbnail">
-                    <a href="#">
-                      <img src="{{ asset('/') }}frontend/images/shop/shop_item_3.jpg" alt="">
+                    <a href="{{route('art', ['art' => $digital_item->associatedModel->id,'type'=>'physical'])}}">
+                      <img src="{{$digital_item->associatedModel->main_images ? asset('images/art/' . @$digital_item->associatedModel->main_images) : '' }}" alt="">
                     </a>
                   </td>
                   <td class="product-name">
-                    <a href="#">Fashion Shorts</a>
+                    <a href="{{route('art', ['art' => $digital_item->associatedModel->id,'type'=>'physical'])}}">{{$digital_item->name}}</a>
                     <ul>
-                      <li>Size: XL</li>
-                      <li>Color: White</li>
+                      <li>Type: Physical</li>
+                      {{-- <li>Color: White</li> --}}
                     </ul>
                   </td>
                   <td class="product-price">
-                    <span class="amount">$1250.00</span>
+                    <span class="amount">{{$digital_item->price}}</span>
                   </td>
                   <td class="product-quantity">
-                    <div class="quantity buttons_added">                  
-                      <input type="number" step="1" min="0" value="1" title="Qty" class="input-text qty text">
+                    <div class="quantity buttons_added">
+                      <input type="number" step="1" min="0" value="{{$digital_item->quantity}}" title="Qty" class="input-text qty text">
                       <div class="quantity-adjust">
                         <a href="#" class="plus">
                           <i class="fa fa-angle-up"></i>
@@ -76,7 +83,7 @@ Cart
                     </div>
                   </td>
                   <td class="product-subtotal">
-                    <span class="amount">$1250.00</span>
+                    <span class="amount">{{$digital_item->price * $digital_item->quantity}}</span>
                   </td>
                   <td class="product-remove">
                     <a href="#" class="remove" title="Remove this item">
@@ -84,26 +91,48 @@ Cart
                     </a>
                   </td>
                 </tr>
+                  @endforeach
 
+
+              </tbody>
+            </table>
+
+          </div>
+
+
+          <div class="table-wrap mb-30">
+            <h3 class="uppercase">Physical </h3>
+            <table class="shop_table cart table">
+              <thead>
+                <tr>
+                  <th class="product-name" colspan="2">Art</th>
+                  <th class="product-price">Price</th>
+                  <th class="product-quantity">Quantity</th>
+                  <th class="product-subtotal" colspan="2">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach ($physical_items as $physical_item )
+                {{-- {{dd($physical_item->qty)}} --}}
                 <tr class="cart_item">
                   <td class="product-thumbnail">
-                    <a href="#">
-                      <img src="{{ asset('/') }}frontend/images/shop/shop_item_7.jpg" alt="">
+                    <a href="{{route('art', ['art' => $physical_item->associatedModel->id,'type'=>'physical'])}}">
+                      <img src="{{$physical_item->associatedModel->main_images ? asset('images/art/' . @$physical_item->associatedModel->main_images) : '' }}" alt="">
                     </a>
                   </td>
                   <td class="product-name">
-                    <a href="#">Business Suit</a>
+                    <a href="{{route('art', ['art' => $physical_item->associatedModel->id,'type'=>'physical'])}}">{{$physical_item->name}}</a>
                     <ul>
-                      <li>Size: L</li>
-                      <li>Color: Black</li>
+                      <li>Type: Digital</li>
+                      {{-- <li>Color: White</li> --}}
                     </ul>
                   </td>
                   <td class="product-price">
-                    <span class="amount">$240.00</span>
+                    <span class="amount">{{$physical_item->price}}</span>
                   </td>
                   <td class="product-quantity">
-                    <div class="quantity buttons_added">                  
-                      <input type="number" step="1" min="0" value="1" title="Qty" class="input-text qty text">
+                    <div class="quantity buttons_added">
+                      <input type="number" step="1" min="0" value="{{$physical_item->quantity}}" title="Qty" class="input-text qty text">
                       <div class="quantity-adjust">
                         <a href="#" class="plus">
                           <i class="fa fa-angle-up"></i>
@@ -115,7 +144,7 @@ Cart
                     </div>
                   </td>
                   <td class="product-subtotal">
-                    <span class="amount">$240.00</span>
+                    <span class="amount">{{$physical_item->price * $physical_item->quantity}}</span>
                   </td>
                   <td class="product-remove">
                     <a href="#" class="remove" title="Remove this item">
@@ -123,23 +152,27 @@ Cart
                     </a>
                   </td>
                 </tr>
+                  @endforeach
               </tbody>
             </table>
           </div>
 
+
+
           <div class="row mb-50">
-            <div class="col-md-5 col-sm-12">
+            {{-- <div class="col-md-5 col-sm-12">
               <div class="coupon">
                 <input type="text" name="coupon_code" id="coupon_code" class="input-text form-control" value placeholder="Coupon code">
                 <input type="submit" name="apply_coupon" class="btn btn-lg btn-stroke" value="Apply">
               </div>
-            </div>
+            </div> --}}
+            <div class="col-md-5 col-sm-12"></div>
 
             <div class="col-md-7">
               <div class="actions">
                 <input type="submit" name="update_cart" value="Update Cart" class="btn btn-lg btn-stroke">
                 <div class="wc-proceed-to-checkout">
-                  <a href="checkout.html" class="btn btn-lg btn-dark"><span>proceed to checkout</span></a>
+                  <a href="{{route('checkout')}}" class="btn btn-lg btn-dark"><span>proceed to checkout</span></a>
                 </div>
               </div>
             </div>
@@ -149,7 +182,7 @@ Cart
       </div> <!-- end row -->
 
       <div class="row">
-        <div class="col-md-6 shipping-calculator-form">
+        {{-- <div class="col-md-6 shipping-calculator-form">
           <h2 class="heading relative uppercase bottom-line full-grey mb-30">Calculate Shipping</h2>
           <p class="form-row form-row-wide">
             <select name="calc_shipping_country" id="calc_shipping_country" class="country_to_state" rel="calc_shipping_state">
@@ -421,9 +454,9 @@ Cart
 
           <p>
             <input type="submit" name="calc_shipping" value="Update Totals" class="btn btn-lg btn-stroke mt-10 mb-mdm-40">
-          </p>                
-        </div> <!-- end col shipping calculator -->
-
+          </p>
+        </div> <!-- end col shipping calculator --> --}}
+   <div class="col-md-6"></div>
         <div class="col-md-6">
           <div class="cart_totals">
             <h2 class="heading relative bottom-line full-grey uppercase mb-30">Cart Totals</h2>
@@ -454,11 +487,14 @@ Cart
           </div>
         </div> <!-- end col cart totals -->
 
-      </div> <!-- end row -->     
+      </div> <!-- end row -->
 
-      
+
     </div> <!-- end container -->
   </section> <!-- end cart -->
 
 
 @endsection
+@push('js')
+
+@endpush
