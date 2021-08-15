@@ -69,11 +69,10 @@
 
                  <li class="divider"></li>
                  <li>
-                     <a href="page_ready_user_profile.html">
+                     <a href="{{route('profile.index')}}">
                          <i class="fa fa-user fa-fw pull-right"></i>
                          Profile
                      </a>
-
                  </li>
 
                  <li>

@@ -43,7 +43,12 @@
 
         <!-- Modernizr (browser feature detection library) -->
         <script src="{{asset('backend/js/vendor/modernizr.min.js')}}"></script>
+         @toastr_css
+
          @stack('css')
+       
+
+
     </head>
     <body >
         <!-- Page Wrapper -->
@@ -107,7 +112,7 @@
                         <!-- Sidebar Content -->
                         <div class="sidebar-content">
                             <!-- Brand -->
-                            <a href="index.html" class="sidebar-brand">
+                            <a href="/" class="sidebar-brand">
                                 <i class="gi gi-flash"></i><span class="sidebar-nav-mini-hide"><strong>Absolutedolly</strong></span>
                             </a>
                             <!-- END Brand -->
@@ -184,6 +189,8 @@
         <script src="{{asset('backend/js/vendor/bootstrap.min.js')}}"></script>
         <script src="{{asset('backend/js/plugins.js')}}"></script>
         <script src="{{asset('backend/js/app.js')}}"></script>
+         @toastr_js
+    @toastr_render
 
       @stack('js')
     </body>

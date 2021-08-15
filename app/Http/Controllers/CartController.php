@@ -98,7 +98,7 @@ class CartController extends Controller
                 'associatedModel' => $art
             ));
         } else {
-            return 'something went worng';
+            return 0;
         }
 
 
@@ -164,10 +164,50 @@ class CartController extends Controller
      * @param  \App\Models\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cart $cart)
+    public function update(Request $request)
     {
-        //
+
+
+
+
+        $id = $request->id;
+        $quantity = $request->qt;
+        $type=$request->type;
+
+        //    dd( $quantity, $id);
+
+
+        \Cart::session($type)->update($id, [
+            'quantity' => array(
+                'relative' => false,
+                'value' => $quantity
+            ),
+
+        ]);
+
+        $item1 = \Cart::session('physical')->getContent();
+        $item2 = \Cart::session('digital')->getContent();
+        $amount1 = \Cart::session('physical')->getSubTotal();
+        $amount2 = \Cart::session('digital')->getSubTotal();
+        $total= $amount1+$amount2;
+
+
+        return [$quantity, $total];
     }
+
+    public function remove(Request $request)
+    {
+
+        // return  $request->post();
+        $id = $request->id;
+
+        $type = $request->type;
+
+        \Cart::session($type)->remove($id);
+
+        return 1;
+    }
+
 
     /**
      * Remove the specified resource from storage.

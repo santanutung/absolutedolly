@@ -35,10 +35,10 @@ class CreateOrdersTable extends Migration
             $table->string('billing_postcode');
             $table->string('billing_email')->nullable();
             $table->string('billing_phone');
-            $table->string('order_comments')->nullable();
+            $table->text('order_comments')->nullable();
 
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+             $table->foreign('user_id')->references('id')->on('users');
 
             $table->timestamps();
         });

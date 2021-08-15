@@ -3,6 +3,10 @@
 @section('title')
     Checkout
 @endsection
+@push('css')
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
+
+@endpush
 
 @section('content')
 
@@ -11,16 +15,17 @@
         <div class="container relative clearfix">
             <div class="title-holder">
                 <div class="title-text">
-                    <h1 class="uppercase">Shopping Cart</h1>
+                    <h1 class="uppercase"> Checkout</h1>
                     <ol class="breadcrumb">
                         <li>
-                            <a href="index.html">Home</a>
+                            <a href="{{ url('/') }}">Home</a>
                         </li>
                         <li>
-                            <a href="index.html">Shop</a>
+                            <a href="{{ url('cart') }}">Cart</a>
                         </li>
+
                         <li class="active">
-                            Cart
+                            Checkout
                         </li>
                     </ol>
                 </div>
@@ -44,15 +49,15 @@
     </div>
   </div> --}}
 
-                    <form name="checkout" id="checkout" class="checkout ecommerce-checkout row" action="{{ route('order.place') }}"
-                        method="post">
+                    <form name="checkout" id="checkout" class="checkout ecommerce-checkout row"
+                        action="{{ route('order.place') }}" method="post">
                         @csrf
 
                         <div class="col-md-8" id="customer_details">
                             <div>
                                 <h2 class="heading uppercase bottom-line full-grey mb-30">billing address</h2>
 
-                                <p class="form-row form-row-wide address-field update_totals_on_change validate-required ecommerce-validated"
+                                {{-- <p class="form-row form-row-wide address-field update_totals_on_change validate-required ecommerce-validated"
                                     id="billing_country_field">
                                     <label for="billing_country">Country
                                         <abbr class="required" title="required">*</abbr>
@@ -310,7 +315,7 @@
                                         <option value="ZM">Zambia</option>
                                         <option value="ZW">Zimbabwe</option>
                                     </select>
-                                </p>
+                                </p> --}}
 
                                 <p class="form-row form-row-first validate-required ecommerce-invalid ecommerce-invalid-required-field"
                                     id="billing_first_name_field">
@@ -330,11 +335,11 @@
                                         id="billing_last_name">
                                 </p>
 
-                                <p class="form-row form-row-wide" id="billing_company_field">
+                                {{-- <p class="form-row form-row-wide" id="billing_company_field">
                                     <label for="billing_company">Company</label>
                                     <input type="text" class="input-text" placeholder value name="billing_company"
                                         id="billing_company">
-                                </p>
+                                </p> --}}
 
                                 <p class="form-row form-row-wide address-field validate-required ecommerce-invalid ecommerce-invalid-required-field"
                                     id="billing_address_1_field">
@@ -345,11 +350,11 @@
                                         name="billing_address_1" id="billing_address_1">
                                 </p>
 
-                                <p class="form-row form-row-wide address-field" id="billing_address_2_field">
+                                {{-- <p class="form-row form-row-wide address-field" id="billing_address_2_field">
                                     <input type="text" class="input-text"
                                         placeholder="Apartment, suite, unit etc. (optional)" value name="billing_address_2"
                                         id="billing_address_2">
-                                </p>
+                                </p> --}}
 
                                 <p class="form-row form-row-wide address-field validate-required" id="billing_city_field"
                                     data-o_class="form-row form-row-wide address-field validate-required">
@@ -362,7 +367,7 @@
 
                                 <p class="form-row form-row-first address-field validate-state" id="billing_state_field"
                                     data-o_class="form-row form-row-first address-field validate-state">
-                                    <label for="billing_state">County</label>
+                                    <label for="billing_state">State</label>
                                     <input type="text" class="input-text" placeholder value name="billing_state"
                                         id="billing_state">
                                 </p>
@@ -471,7 +476,7 @@
                                 </table>
 
                                 <div id="payment" class="ecommerce-checkout-payment">
-                                    <h2 class="heading uppercase bottom-line full-grey">Payment Method</h2>
+                                    {{-- <h2 class="heading uppercase bottom-line full-grey">Payment Method</h2> --}}
                                     <ul class="payment_methods methods">
 
                                         {{-- <li class="payment_method_bacs">
@@ -490,105 +495,149 @@
             </li> --}}
 
                                         <li class="payment_method_paypal">
-                                            <input id="payment_method_paypal" type="radio" class="input-radio"
-                                                name="payment_method" value="paypal">
-                                            <label for="payment_method_paypal">Rozer pay</label>
-                                            {{-- <img src="{{ asset('/') }}frontend/img/shop/paypal.png" alt=""> --}}
+                                            {{-- <input id="payment_method_paypal" type="radio" class="input-radio"
+                                                name="payment_method" value="paypal"> --}}
+                                            {{-- <label for="payment_method_paypal">Rozer pay</label> --}}
+                                            {{-- <img src="{{ asset('/') }}frontend/img/shop/paypal.png" alt="">
                                             <div class="payment_box payment_method_paypal">
                                                 <p>Rozer pay; you can pay with your credit card if you don’t have a PayPal
-                                                    Rozer pay.</p>
-                                            </div>
-                                        </li>
+                                                    Rozer pay.</p> --}}
+                                </div>
+                                </li>
 
-                                    </ul>
-                                    <div class="form-row place-order">
-                                        <input type="button" name="ecommerce_checkout_place_order"
-                                            class="btn btn-lg btn-dark" id="place_order" value="Place order">
-                                    </div>
+                                </ul>
+                                <div class="form-row place-order">
+                                    <input type="button" name="ecommerce_checkout_place_order" class="btn btn-lg btn-dark"
+                                        id="place_order" value="Place order">
                                 </div>
                             </div>
-                        </div> <!-- end order review -->
-                    </form>
+                        </div>
+                </div> <!-- end order review -->
+                </form>
 
-                </div> <!-- end ecommerce -->
+            </div> <!-- end ecommerce -->
 
-            </div> <!-- end row -->
+        </div> <!-- end row -->
         </div> <!-- end container -->
     </section> <!-- end checkout -->
 
 @endsection
 
 @push('js')
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script>
         $(document).ready(function() {
+
             $('#place_order').click(function(e) {
                 e.preventDefault();
 
-
-                    var amt = {{$amount1 + $amount2}}
-
-                    // axios.post("{{ route('rozerpay_done') }}", {
-                    //                 amount: $('#amount').val(),
-
-                    //                 order: $('#checkout').serialize()
-                    //             })
-                    //             .then(function(response) {
-                    //               console.log(response);
+                place_order_check();
 
 
-                    //             })
-
-                    var options = {
-                        //  "key": "rzp_test_5DZLXTn18w4RtS",
-                        "key": "rzp_test_nBcst3PlEYKRj6",
-
-                        // "key": "rzp_live_DsHEnpXDYfQv48",
-
-                        "amount": (amt * 100),
-                        "currency": "INR",
-                        "name": "beautyplayers.com",
-                        "description": "Add money walet",
-                        "image": "http://beautyplayers.com/local/images/settings/1623872239.png",
-                        "prefill.name": "{{ Auth::user()->name}}",
-                        "prefill.email": "{{ Auth::user()->email }}",
-                        "prefill.contact": "{{ Auth::user()->phone }}",
-                        "handler": function(response) {
-                            $('#AmountSelectModal').modal('hide');
-                            console.log(response);
-                            axios.post("{{ route('rozerpay_done') }}", {
-                                    amount: $('#amount').val(),
-                                    razorpay_payment_id: response.razorpay_payment_id,
-                                    order: $('#checkout').serialize()
-                                })
-                                .then(function(response) {
-
-                                    if (response.data == 1) {
-                                        //   location.reload();
-                                        swal("Money added in wallet", "", "success")
-                                            .then(function() {
-                                                window.location.reload();
-                                            });
-                                        console.log(response);
-                                    } else {
-                                        swal("Someting went wrong", "", "error");
-                                    }
-                                })
-                                .catch(function(error) {
-                                    console.log(error);
-                                });
-                        }
-                    };
-                    var rzp1 = new Razorpay(options);
-                    rzp1.open();
-
-
-
-
+                var amt = {{ $amount1 + $amount2 }}
+                // axios.post("{{ route('rozerpay_done') }}", {
+                //                 amount: $('#amount').val(),
+                //                 razorpay_payment_id:25,
+                //                 order: $('#checkout').serialize()
+                //             })
+                //             .then(function(response) {
+                //               console.log(response.data);
+                //                window.location.replace('customer/myorder');
+                //             })
 
             });
+
+
+            function place_order_check() {
+                var billing_first_name = $('#billing_first_name').val();
+                var billing_last_name = $('#billing_last_name').val();
+                var billing_address_1 = $('#billing_address_1').val();
+                var billing_city = $('#billing_city').val();
+                var billing_postcode = $('#billing_postcode').val();
+                var billing_email = $('#billing_email').val();
+                var billing_phone = $('#billing_phone').val();
+
+                //  toastr.error('Please enter first name', 'Error!')
+
+
+                if (!billing_first_name.length) {
+                    toastr.error('Please enter first name', 'Error!')
+                } else if (!billing_last_name.length) {
+                    toastr.error('Please enter last name', 'Error!')
+
+                } else if (!billing_address_1.length) {
+                    toastr.error('Please enter address', 'Error!')
+
+                } else if (!billing_city.length) {
+                    toastr.error('Please enter city', 'Error!')
+
+                } else if (!billing_postcode.length) {
+                    toastr.error('Please enter postcode', 'Error!')
+
+                } else if (!billing_email.length) {
+                    toastr.error('Please enter email', 'Error!')
+
+                } else if (!billing_phone.length) {
+                    toastr.error('Please enter phone.', 'Error!')
+
+                } else {
+                    place_order()
+
+                }
+
+
+
+
+            }
+                var amt = {{ $amount1 + $amount2 }}
+
+            function place_order() {
+
+                var options = {
+                    //  "key": "rzp_test_5DZLXTn18w4RtS",
+                    "key": "rzp_test_nBcst3PlEYKRj6",
+
+                    // "key": "rzp_live_DsHEnpXDYfQv48",
+
+                    "amount": (amt * 100),
+                    "currency": "INR",
+                    "name": "beautyplayers.com",
+                    "description": "Add money walet",
+                    "image": "http://beautyplayers.com/local/images/settings/1623872239.png",
+                    "prefill.name": "{{ Auth::user()->name }}",
+                    "prefill.email": "{{ Auth::user()->email }}",
+                    "prefill.contact": "{{ Auth::user()->phone }}",
+                    "handler": function(response) {
+                        $('#AmountSelectModal').modal('hide');
+                        console.log(response);
+                        axios.post("{{ route('rozerpay_done') }}", {
+                                amount: $('#amount').val(),
+                                razorpay_payment_id: response.razorpay_payment_id,
+                                order: $('#checkout').serialize()
+                            })
+                            .then(function(response) {
+                                console.log(response)
+
+                                //    window.location.replace('customer/myorder');
+                            })
+                            .catch(function(error) {
+                                console.log(error);
+                            });
+                    }
+                };
+                var rzp1 = new Razorpay(options);
+                rzp1.open();
+
+
+            }
+
+
+
+
+
 
         });
     </script>

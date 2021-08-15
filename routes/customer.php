@@ -21,10 +21,15 @@ Route::get('/c', function () {
 
 
 Route::group([
-    'as' => 'customer.', 'prefix' => 'customer', 'namespace' => 'Customer'
+    'as' => 'customer.', 'prefix' => 'customer',  'namespace' => 'App\Http\Controllers\Customer'
      ,'middleware'=>['auth', 'CustomerMiddleware']
 ], function () {
     Route::get('/dashboard', [App\Http\Controllers\Customer\DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/myorder', [App\Http\Controllers\Customer\MyOrderderController::class, 'index'])->name('myorder.index');
+    Route::resource('orders', MyOrderderController::class);
+
+
 });
 
 

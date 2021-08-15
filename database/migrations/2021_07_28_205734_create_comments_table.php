@@ -15,11 +15,15 @@ class CreateCommentsTable extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('art_id')->unsigned()->onDelete('cascade');
-            $table->foreignId('user_id')->unsigned()->onDelete('cascade');
-            $table->integer('is_approve');
-            $table->integer('rating');
-            $table->text('comment');
+            $table->integer('art_id')->unsigned()->onDelete('cascade');
+            $table->integer('user_id')->nullable();
+            $table->string('name')->nullable();
+            $table->string('digital')->default(0);
+            $table->string('physical')->default(0);
+            $table->integer('is_approve')->default(0);
+            $table->enum('type', ['castomer', 'admin', 'gust'])->default('gust');
+            $table->integer('rating')->nullable();
+            $table->text('comment')->nullable();
             $table->timestamps();
         });
     }

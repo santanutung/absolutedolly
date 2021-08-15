@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Rozerpay;
 use Illuminate\Http\Request;
+use App\Models\OrderItem;
 
 class OrderController extends Controller
 {
@@ -82,7 +83,7 @@ class OrderController extends Controller
         $order->user_id = auth()->id();
         $order->payment_method = 'rozerpay';
 
-        $order->save();
+      //  $order->save();
 
 
         // $cartItems = \Cart::session('4')->getContent();
@@ -95,7 +96,9 @@ class OrderController extends Controller
 
         // \Cart::session('4')->clear();
 
-        // return redirect()->route('user.payment', $order->id);
+
+
+         return redirect()->route('myorder.index');
 
 
     }
@@ -154,23 +157,32 @@ class OrderController extends Controller
         $order->item_count =  $item1->count()+$item2->count();
         $order->grand_total =  $amount1 + $amount2;
 
-        $order->save();
+       $order->save();
 
 
 
 
-        foreach ($item1 as $item) {
-            $order->items()->attach($item->id, ['price' => $item->price, 'quantity' => $item->quantity]);
+        if( $item1->count() >=1){
+            foreach ($item1 as $item) {
+                OrderItem::create(['art_id'=> $item->id, 'order_id' => $order->id,'price' => $item->price, 'quantity' => $item->quantity, 'item_type' => 'physical']);
+            }
+
         }
 
-        foreach ($item2 as $item) {
-            $order->items()->attach($item->id, ['price' => $item->price, 'quantity' => $item->quantity]);
+
+        if ($item2->count() >= 1) {
+            foreach ($item2 as $item) {
+               
+                OrderItem::create(['art_id' => $item->id, 'order_id' => $order->id, 'price' => $item->price, 'quantity' => $item->quantity, 'item_type' => 'digital']);
+            }
+
+
         }
 
 
 
-        \Cart::session('physical')->clear();
-        \Cart::session('digital')->clear();
+       \Cart::session('physical')->clear();
+       \Cart::session('digital')->clear();
 
         // return redirect()->route('user.payment', $order->id);
 
@@ -233,7 +245,7 @@ class OrderController extends Controller
 
         $this->razorpay_payment_id=$request->razorpay_payment_id;
         // dd ($request->all(), json_encode($request->order, true));
-         $box = $request->all();
+        $box = $request->all();
         $AllData =  array();
         parse_str($box['order'], $AllData);
          gettype($AllData);
@@ -243,12 +255,12 @@ class OrderController extends Controller
 
 
 
-        $this->billing_country= $AllData->billing_country;
+        // $this->billing_country= $AllData->billing_country;
         $this->billing_first_name= $AllData->billing_first_name;
         $this->billing_last_name= $AllData->billing_last_name;
-        $this->billing_company= $AllData->billing_company;
+        // $this->billing_company= $AllData->billing_company;
         $this->billing_address_1= $AllData->billing_address_1;
-        $this->billing_address_2= $AllData->billing_address_2;
+        // $this->billing_address_2= $AllData->billing_address_2;
         $this->billing_city= $AllData->billing_city;
         $this->billing_state= $AllData->billing_state;
         $this->billing_postcode= $AllData->billing_postcode;
@@ -258,6 +270,8 @@ class OrderController extends Controller
         $this->rozerpay_ref= '';
 
         $this->orderplace();
+        toastr()->success('Order Place  successfully', 'Success');
+        return 1;
 
 
     }

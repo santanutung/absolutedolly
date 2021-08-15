@@ -1,7 +1,7 @@
 @extends('front.master')
 
 @section('title')
-Cart
+    Cart
 @endsection
 @push('css')
 
@@ -12,177 +12,229 @@ Cart
     <!-- Page Title -->
     <section class="page-title text-center bg-light">
         <div class="container relative clearfix">
-        <div class="title-holder">
-            <div class="title-text">
-            <h1 class="uppercase"> Cart</h1>
-            <ol class="breadcrumb">
-                <li>
-                <a href="index.html">Home</a>
-                </li>
-                <li>
-                <a href="index.html">Shop</a>
-                </li>
-                <li class="active">
-                Cart
-                </li>
-            </ol>
+            <div class="title-holder">
+                <div class="title-text">
+                    <h1 class="uppercase"> Cart</h1>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="{{ url('/') }}">Home</a>
+                        </li>
+
+                        <li class="active">
+                            Cart
+                        </li>
+                    </ol>
+                </div>
             </div>
-        </div>
         </div>
     </section>
 
 
 
     <!-- Cart -->
-  <section class="section-wrap shopping-cart">
-    <div class="container relative">
-      <div class="row">
+    <section class="section-wrap shopping-cart">
+        <div class="container relative">
+            <div class="row">
 
-        <div class="col-md-12">
-           <div class="table-wrap mb-30">
-            <h3 class="uppercase">  Digital</h3>
-             <table class="shop_table cart table">
-              <thead>
-                <tr>
-                  <th class="product-name" colspan="2">Art</th>
-                  <th class="product-price">Price</th>
-                  <th class="product-quantity">Quantity</th>
-                  <th class="product-subtotal" colspan="2">Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach ($digital_items as $digital_item )
-                {{-- {{dd($digital_item->qty)}} --}}
-                <tr class="cart_item">
-                  <td class="product-thumbnail">
-                    <a href="{{route('art', ['art' => $digital_item->associatedModel->id,'type'=>'physical'])}}">
-                      <img src="{{$digital_item->associatedModel->main_images ? asset('images/art/' . @$digital_item->associatedModel->main_images) : '' }}" alt="">
-                    </a>
-                  </td>
-                  <td class="product-name">
-                    <a href="{{route('art', ['art' => $digital_item->associatedModel->id,'type'=>'physical'])}}">{{$digital_item->name}}</a>
-                    <ul>
-                      <li>Type: Physical</li>
-                      {{-- <li>Color: White</li> --}}
-                    </ul>
-                  </td>
-                  <td class="product-price">
-                    <span class="amount">{{$digital_item->price}}</span>
-                  </td>
-                  <td class="product-quantity">
-                    <div class="quantity buttons_added">
-                      <input type="number" step="1" min="0" value="{{$digital_item->quantity}}" title="Qty" class="input-text qty text">
-                      <div class="quantity-adjust">
-                        <a href="#" class="plus">
-                          <i class="fa fa-angle-up"></i>
-                        </a>
-                        <a href="#" class="minus">
-                          <i class="fa fa-angle-down"></i>
-                        </a>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="product-subtotal">
-                    <span class="amount">{{$digital_item->price * $digital_item->quantity}}</span>
-                  </td>
-                  <td class="product-remove">
-                    <a href="#" class="remove" title="Remove this item">
-                      <i class="ui-close"></i>
-                    </a>
-                  </td>
-                </tr>
-                  @endforeach
+                <div class="col-md-12">
+                    @if ($total_item)
 
 
-              </tbody>
-            </table>
+                        @if ($digital_count)
+                            <div class="table-wrap mb-30">
+                                <h3 class="uppercase"> Digital</h3>
+                                <table class="shop_table cart table">
+                                    <thead>
+                                        <tr>
+                                            <th class="product-name" colspan="2">Art</th>
+                                            <th class="product-price">Price</th>
+                                            <th class="product-quantity">Quantity</th>
+                                            <th class="product-subtotal" colspan="2">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($digital_items as $digital_item)
+                                            {{-- {{dd($digital_item->qty)}} --}}
+                                            <tr class="cart_item digital_remove_{{$digital_item->id}}">
+                                                <td class="product-thumbnail">
+                                                    <a
+                                                        href="{{ route('art', ['art' => $digital_item->associatedModel->id, 'type' => 'physical']) }}">
+                                                        <img src="{{ $digital_item->associatedModel->main_images ? asset('images/art/' . @$digital_item->associatedModel->main_images) : '' }}"
+                                                            alt="">
+                                                    </a>
+                                                </td>
+                                                <td class="product-name">
+                                                    <a
+                                                        href="{{ route('art', ['art' => $digital_item->associatedModel->id, 'type' => 'physical']) }}">{{ $digital_item->name }}</a>
+                                                    <ul>
+                                                        <li>Type: Digital</li>
+                                                        {{-- <li>Color: White</li> --}}
+                                                    </ul>
+                                                </td>
+                                                <td class="product-price">
+                                                    <span class="amount">{{ $digital_item->price }}</span>
+                                                </td>
+                                                <td class="product-quantity">
+                                                    <div class="quantity buttons_added">
+                                                        <input type="number" step="1" min="0" id=""
+                                                            data-price="{{ $digital_item->price }}"
+                                                            data-id="{{ $digital_item->id }}"
+                                                            value="{{ $digital_item->quantity }}" title="Qty"
+                                                            class="input-text qty text digital_qt">
+                                                        <div class="quantity-adjust">
+                                                            <a href="#" class="plus">
+                                                                <i class="fa fa-angle-up"></i>
+                                                            </a>
+                                                            <a href="#" class="minus">
+                                                                <i class="fa fa-angle-down"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="product-subtotal">
+                                                    <span
+                                                        class="amount  amount-{{ $digital_item->id }}">{{ $digital_item->price * $digital_item->quantity }}</span>
+                                                </td>
+                                                <td class="product-remove">
+                                                    <a href="#" class="remove digital_remove" data-id='{{$digital_item->id}}' title="Remove this item">
+                                                        <i class="ui-close"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
 
-          </div>
 
+                                    </tbody>
+                                </table>
+                            </div>
+                        @endif
 
-          <div class="table-wrap mb-30">
-            <h3 class="uppercase">Physical </h3>
-            <table class="shop_table cart table">
-              <thead>
-                <tr>
-                  <th class="product-name" colspan="2">Art</th>
-                  <th class="product-price">Price</th>
-                  <th class="product-quantity">Quantity</th>
-                  <th class="product-subtotal" colspan="2">Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach ($physical_items as $physical_item )
-                {{-- {{dd($physical_item->qty)}} --}}
-                <tr class="cart_item">
-                  <td class="product-thumbnail">
-                    <a href="{{route('art', ['art' => $physical_item->associatedModel->id,'type'=>'physical'])}}">
-                      <img src="{{$physical_item->associatedModel->main_images ? asset('images/art/' . @$physical_item->associatedModel->main_images) : '' }}" alt="">
-                    </a>
-                  </td>
-                  <td class="product-name">
-                    <a href="{{route('art', ['art' => $physical_item->associatedModel->id,'type'=>'physical'])}}">{{$physical_item->name}}</a>
-                    <ul>
-                      <li>Type: Digital</li>
-                      {{-- <li>Color: White</li> --}}
-                    </ul>
-                  </td>
-                  <td class="product-price">
-                    <span class="amount">{{$physical_item->price}}</span>
-                  </td>
-                  <td class="product-quantity">
-                    <div class="quantity buttons_added">
-                      <input type="number" step="1" min="0" value="{{$physical_item->quantity}}" title="Qty" class="input-text qty text">
-                      <div class="quantity-adjust">
-                        <a href="#" class="plus">
-                          <i class="fa fa-angle-up"></i>
-                        </a>
-                        <a href="#" class="minus">
-                          <i class="fa fa-angle-down"></i>
-                        </a>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="product-subtotal">
-                    <span class="amount">{{$physical_item->price * $physical_item->quantity}}</span>
-                  </td>
-                  <td class="product-remove">
-                    <a href="#" class="remove" title="Remove this item">
-                      <i class="ui-close"></i>
-                    </a>
-                  </td>
-                </tr>
-                  @endforeach
-              </tbody>
-            </table>
-          </div>
+                        @if ($physical_count)
+                            <div class="table-wrap mb-30">
+                                <h3 class="uppercase">Physical </h3>
+                                <table class="shop_table cart table">
+                                    <thead>
+                                        <tr>
+                                            <th class="product-name" colspan="2">Art</th>
+                                            <th class="product-price">Price</th>
+                                            <th class="product-quantity">Quantity</th>
+                                            <th class="product-subtotal" colspan="2">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($physical_items as $physical_item)
+                                            {{-- {{dd($physical_item->qty)}} --}}
+                                            <tr class="cart_item physical_remove_{{$physical_item->id}}">
+                                                <td class="product-thumbnail">
+                                                    <a
+                                                        href="{{ route('art', ['art' => $physical_item->associatedModel->id, 'type' => 'physical']) }}">
+                                                        <img src="{{ $physical_item->associatedModel->main_images ? asset('images/art/' . @$physical_item->associatedModel->main_images) : '' }}"
+                                                            alt="">
+                                                    </a>
+                                                </td>
+                                                <td class="product-name">
+                                                    <a
+                                                        href="{{ route('art', ['art' => $physical_item->associatedModel->id, 'type' => 'physical']) }}">{{ $physical_item->name }}</a>
+                                                    <ul>
+                                                        <li>Type: Physical</li>
+                                                        {{-- <li>Color: White</li> --}}
+                                                    </ul>
+                                                </td>
+                                                <td class="product-price">
+                                                    <span class="amount">{{ $physical_item->price }}</span>
+                                                </td>
+                                                <td class="product-quantity">
+                                                    <div class="quantity buttons_added">
+                                                        <input type="number" step="1" min="0"
+                                                            data-price="{{ $physical_item->price }}"
+                                                            data-id="{{ $physical_item->id }}"
+                                                            value="{{ $physical_item->quantity }}" title="Qty"
+                                                            class="input-text qty text physical_qty">
+                                                        <div class="quantity-adjust">
+                                                            <a href="#" class="plus">
+                                                                <i class="fa fa-angle-up"></i>
+                                                            </a>
+                                                            <a href="#" class="minus">
+                                                                <i class="fa fa-angle-down"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="product-subtotal">
+                                                    <span
+                                                        class="amount amount-{{ $physical_item->id }}">{{ $physical_item->price * $physical_item->quantity }}</span>
+                                                </td>
+                                                <td class="product-remove">
+                                                    <a href="#" class="remove physical_remove" data-id="{{$physical_item->id}}" title="Remove this item">
+                                                        <i class="ui-close"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @endif
+                    @else
+                        <h2> Your car is empty !</h2>
+                    @endif
 
+                    @php
+                        $subtoal = @$physical_item->price * @$physical_item->quantity + @$digital_item->price * @$digital_item->quantity;
+                    @endphp
 
+                    @if ($total_item)
 
-          <div class="row mb-50">
-            {{-- <div class="col-md-5 col-sm-12">
-              <div class="coupon">
-                <input type="text" name="coupon_code" id="coupon_code" class="input-text form-control" value placeholder="Coupon code">
-                <input type="submit" name="apply_coupon" class="btn btn-lg btn-stroke" value="Apply">
-              </div>
+                        <div class="row mb-50">
+                            <div class="col-md-5 col-sm-12">
+                                {{-- <div class="cart_totals">
+              <h2 class="heading relative bottom-line full-grey uppercase mb-30">Cart Totals</h2>
+
+              <table class="table shop_table">
+                <tbody>
+                  <tr class="cart-subtotal">
+                    <th>Cart Subtotal</th>
+                    <td>
+                      <span class="amount">{{ $subtoal }} INR</span>
+                    </td>
+                  </tr>
+                  <tr class="shipping">
+                    <th>Shipping</th>
+                    <td>
+                      <span>Free Shipping</span>
+                    </td>
+                  </tr>
+                  <tr class="order-total">
+                    <th>Order Total</th>
+                    <td>
+                      <strong><span class="amount total_amount">{{ $subtoal }} </span><span> INR</span></strong>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
             </div> --}}
-            <div class="col-md-5 col-sm-12"></div>
+                            </div>
+                            <div class="col-md-5 col-sm-12"></div>
 
-            <div class="col-md-7">
-              <div class="actions">
-                <input type="submit" name="update_cart" value="Update Cart" class="btn btn-lg btn-stroke">
-                <div class="wc-proceed-to-checkout">
-                  <a href="{{route('checkout')}}" class="btn btn-lg btn-dark"><span>proceed to checkout</span></a>
-                </div>
-              </div>
-            </div>
-          </div>
+                            <div class="col-md-7">
+                                <div class="actions">
+                                    {{-- <input type="submit" name="update_cart" value="Update Cart" class="btn btn-lg btn-stroke"> --}}
+                                    <div class="wc-proceed-to-checkout">
+                                        <a href="{{ route('checkout') }}" class="btn btn-lg btn-dark"><span>proceed to
+                                                checkout</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-        </div> <!-- end col -->
-      </div> <!-- end row -->
+                    @endif
 
-      <div class="row">
-        {{-- <div class="col-md-6 shipping-calculator-form">
+                </div> <!-- end col -->
+            </div> <!-- end row -->
+
+            <div class="row">
+                {{-- <div class="col-md-6 shipping-calculator-form">
           <h2 class="heading relative uppercase bottom-line full-grey mb-30">Calculate Shipping</h2>
           <p class="form-row form-row-wide">
             <select name="calc_shipping_country" id="calc_shipping_country" class="country_to_state" rel="calc_shipping_state">
@@ -456,9 +508,9 @@ Cart
             <input type="submit" name="calc_shipping" value="Update Totals" class="btn btn-lg btn-stroke mt-10 mb-mdm-40">
           </p>
         </div> <!-- end col shipping calculator --> --}}
-   <div class="col-md-6"></div>
-        <div class="col-md-6">
-          <div class="cart_totals">
+                <div class="col-md-6"></div>
+                <div class="col-md-6">
+                    {{-- <div class="cart_totals">
             <h2 class="heading relative bottom-line full-grey uppercase mb-30">Cart Totals</h2>
 
             <table class="table shop_table">
@@ -484,17 +536,173 @@ Cart
               </tbody>
             </table>
 
-          </div>
-        </div> <!-- end col cart totals -->
+          </div> --}}
+                </div> <!-- end col cart totals -->
 
-      </div> <!-- end row -->
+            </div> <!-- end row -->
 
 
-    </div> <!-- end container -->
-  </section> <!-- end cart -->
+        </div> <!-- end container -->
+    </section> <!-- end cart -->
 
 
 @endsection
 @push('js')
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        // $('#physical_qty').change(function() {
+        //           e.preventDefault();
+        //           axios.post('{{ route('cart.update') }}', {
+        //                   id: "{{ 30 }}"
+
+        //               })
+        //               .then(function(response) {
+        //                   console.log(response);
+        //               })
+        //               .catch(function(error) {
+        //                   console.log(error);
+        //               });
+
+        //       });
+
+        $(document).ready(function() {
+            $('.physical_qty').change(function(e) {
+                e.preventDefault();
+
+                var qt = $(this).val();
+                var id = $(this).data('id');
+                var price = $(this).data('price');
+
+                if (qt > 0) {
+                    axios.post('{{ route('cart.update') }}', {
+                            id: id,
+                            qt: qt,
+                            type: 'physical'
+                        })
+                        .then(function(response) {
+                            var new_qt = response.data[0];
+                            // console.log(new_qt,new_qt[0],new_qt[1]);
+
+                            var total_price = new_qt * price;
+
+                            toastr.success('Cart  updated successfully', 'success');
+                            $(`.amount-${id}`).text(total_price);
+                            var total = response.data[1]
+                            // $('.total_amount').text(total);
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                        });
+                } else {
+                    toastr.error('Some thing is worng !', 'Error!');
+
+                }
+
+
+
+            });
+
+
+            $('.digital_qt').change(function(e) {
+                e.preventDefault();
+
+                var qt = $(this).val();
+                var id = $(this).data('id');
+                var price = $(this).data('price');
+
+                if (qt > 0) {
+                    axios.post('{{ route('cart.update') }}', {
+                            id: id,
+                            qt: qt,
+                            type: 'digital'
+                        })
+                        .then(function(response) {
+                            var new_qt = response.data[0];
+                            var total_price = new_qt * price;
+
+                            toastr.success('Cart  updated successfully', 'success');
+                            $(`.amount-${id}`).text(total_price);
+                            console.log(response);
+
+
+                            var total = response.data[1];
+                            $('.total_amount').text(total);
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                        });
+                } else {
+                    toastr.error('Some thing is worng !', 'Error!');
+
+                }
+
+            });
+
+
+            $('.physical_remove').click(function(e) {
+                e.preventDefault();
+                // var qt = $(this).val();
+
+                var id = $(this).data('id');
+                console.log(id);
+
+
+
+                axios.post('{{ route('cart.remove') }}', {
+                      id: id,
+                      type:'physical'
+                  })
+                  .then(function(response) {
+                    console.log(response);
+                    if (response.data==1) {
+                        $(`.physical_remove_${id}`).hide();
+                       toastr.success('Cart  updated successfully', 'success');
+
+                    }
+
+                    //
+                    // $(`.amount-${id}`).text(total_price);
+                  })
+                  .catch(function(error) {
+                      console.log(error);
+                  });
+
+            });
+
+             $('.digital_remove').click(function(e) {
+                e.preventDefault();
+                // var qt = $(this).val();
+
+                var id = $(this).data('id');
+                console.log(id);
+
+                axios.post('{{ route('cart.remove') }}', {
+                      id: id,
+                      type:'digital'
+                  })
+                  .then(function(response) {
+                    console.log(response);
+                    if (response.data==1) {
+                        $(`.digital_remove_${id}`).hide();
+                       toastr.success('Cart  updated successfully', 'success');
+
+                    }
+
+                    //
+                    // $(`.amount-${id}`).text(total_price);
+                  })
+                  .catch(function(error) {
+                      console.log(error);
+                  });
+
+            });
+
+
+
+
+
+
+        });
+    </script>
 
 @endpush

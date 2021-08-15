@@ -28,6 +28,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('/') }}frontend/css/sliders.css" media="screen">
 	<link rel="stylesheet" type="text/css" href="{{ asset('/') }}frontend/css/style.css" media="screen">
 	<link rel="stylesheet" type="text/css" href="{{ asset('/') }}frontend/css/style2.css" media="screen">
+	  @toastr_css
 	@stack('css')
 	<style>
 		a.size-s {
@@ -70,13 +71,20 @@ a.size-s:hover {
 						<ul class="nav navbar-nav navbar-right navigate-section">
 							<li class="drop"><a class="active" href="{{ route('/') }}">Home</a></li>
 							<li><a href="about.html">About</a></li>
-							<li><a href="portfolio.html">Portfolio</a></li>
+							<li><a href="{{route('works')}}">Portfolio</a></li>
 							<li><a href="blog.html">Blog</a></li>
-							<li><a href="contact.html">Contact</a></li>
-							<li><a href="product.html">Product</a></li>
-							<li><a href="{{ route('art') }}">Single Product</a></li>
+							<li><a href="{{route('contact')}}">Contact</a></li>
+							{{-- <li><a href="product.html">Product</a></li> --}}
 							<li><a href="{{ route('cart') }}">Cart</a></li>
-							<li><a href="{{ route('checkout') }}">Checkout</a></li>
+							{{-- <li><a href="{{ route('checkout') }}">Checkout</a></li> --}}
+							@if (Auth::check())
+							 <li><a href="{{ route('login') }}">dashboard</a></li>
+
+							 @else
+							 <li><a href="{{ route('login') }}">login</a></li>
+
+							 @endif
+
 							<li><a class="open-menu" href="#"><i class="fa fa-bars" aria-hidden="true"></i></a></li>
 						</ul>
 					</div><!-- /.navbar-collapse -->
@@ -89,6 +97,11 @@ a.size-s:hover {
 
 		<!-- footer
 			================================================== -->
+
+			@php
+				  $footer_settings= App\Models\Footersetting::find(1);
+
+			@endphp
 		<footer>
 			<div class="up-footer">
 				<div class="container">
@@ -96,45 +109,43 @@ a.size-s:hover {
 
 						<div class="col-md-3 col-sm-6">
 							<div class="footer-widget text-widget">
-								<h1>we are orion<span>.</span></h1>
-								<span>hello@orion.com</span>
-								<span>+(123) 456 7890</span>
+								<h1>{{$footer_settings->footer_one_tittle}}<span>.</span></h1>
+								<span>{{$footer_settings->footer_one_email}}</span>
+								<span>{{$footer_settings->footer_one_phone}}</span>
 							</div>
 							<div class="footer-widget social-widget">
-								<h2>We are social</h2>
+								<h2>{{$footer_settings->footer_one_tittle_2}}</h2>
 								<ul class="social-icons">
-									<li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+									@if($footer_settings->social_icon_1 && $footer_settings->social_icon_link_1 )
+									<li><a class="" href="{{$footer_settings->social_icon_link_1}}"><i class="{{ $footer_settings->social_icon_1}}"></i></a></li>
+                                    @endif
+
+									@if($footer_settings->social_icon_2 && $footer_settings->social_icon_link_2 )
+									<li><a class="" href="{{$footer_settings->social_icon_link_2}}"><i class="{{ $footer_settings->social_icon_2}}"></i></a></li>
+                                    @endif
+
+									@if($footer_settings->social_icon_3 && $footer_settings->social_icon_link_3 )
+									<li><a class="" href="{{$footer_settings->social_icon_link_3}}"><i class="{{ $footer_settings->social_icon_3}}"></i></a></li>
+                                    @endif
+
+									@if($footer_settings->social_icon_4 && $footer_settings->social_icon_link_4 )
+									<li><a class="" href="{{$footer_settings->social_icon_link_4}}"><i class="{{ $footer_settings->social_icon_4}}"></i></a></li>
+                                    @endif
+
+{{--
 									<li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
 									<li><a class="google" href="#"><i class="fa fa-google-plus"></i></a></li>
 									<li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
-									<li><a class="pinterest" href="#"><i class="fa fa-pinterest"></i></a></li>
+									<li><a class="pinterest" href="#"><i class="fa fa-pinterest"></i></a></li> --}}
 								</ul>
 							</div>
 						</div>
 
-						<div class="col-md-3 col-sm-6">
-							<div class="footer-widget posts-widget">
-								<h2>Recent Posts</h2>
-								<ul class="latest-posts">
-									<li>
-										<h2><a href="single-post.html">Donec odio. Quisque volutpat mattis eros. Nullam malesuada </a></h2>
-										<a href="#">5 comment</a>
-									</li>
-									<li>
-										<h2><a href="single-post.html">Quisque volutpat mattis eros. Nullam malesuada erat ut turpis.  </a></h2>
-										<a href="#">2 comment</a>
-									</li>
-									<li>
-										<h2><a href="single-post.html">Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.</a></h2>
-										<a href="#">13 comment</a>
-									</li>
-								</ul>
-							</div>
-						</div>
 
-						<div class="col-md-3 col-sm-6">
+
+						<div class="col-md-6 col-sm-6">
 							<div class="footer-widget instagram-widget">
-								<h2>Instagram Feed</h2>
+								<h2>{{$footer_settings->footer_two_tittle}}</h2>
 								<ul class="instagram-list">
 									<li><a href="#"><img src="{{ asset('/') }}frontend/upload/instagram/1.jpg" alt=""></a></li>
 									<li><a href="#"><img src="{{ asset('/') }}frontend/upload/instagram/2.jpg" alt=""></a></li>
@@ -148,27 +159,32 @@ a.size-s:hover {
 
 						<div class="col-md-3 col-sm-6">
 							<div class="footer-widget newsletter-widget">
-								<h2>Newsletter</h2>
-								<p>Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. </p>
+								<h2>{{$footer_settings->footer_three_tittle}}</h2>
+								<p>{{$footer_settings->footer_three_text}} </p>
 								<form class="newletter-form">
 									<input type="text" name="your-email" id="your-email" placeholder="email"/>
 									<input type="submit" id="submit_it" value="go"/>
 								</form>
 							</div>
 						</div>
-
 					</div>
 				</div>
 			</div>
 
 			<p class="copyright">
-				&copy; Copyright 2017. "Orion" by Nunforest. All rights reserved.
+				{{$footer_settings->footer_copyright}}
+				{{-- &copy; Copyright 2017. "Orion" by Nunforest. All rights reserved. --}}
+
 			</p>
 		</footer>
 		<!-- End footer -->
 
 	</div>
 	<!-- End Container -->
+
+	
+
+
 
 
 	<script type="text/javascript" src="{{ asset('/') }}frontend/js/jquery.min.js"></script>
@@ -203,7 +219,8 @@ a.size-s:hover {
 
 	<script type="text/javascript" src="{{ asset('/') }}frontend/js/script.js"></script>
     <script type="text/javascript" src="{{ asset('/') }}frontend/js/scripts.js"></script>
-
+     @toastr_js
+    @toastr_render
 @stack('js')
 </body>
 </html>

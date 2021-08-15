@@ -14,7 +14,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        return view('profile.rate');
     }
 
     /**
@@ -24,7 +24,8 @@ class CommentController extends Controller
      */
     public function create()
     {
-        //
+
+        return view('profile.rate');
     }
 
     /**
@@ -35,7 +36,31 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+      $art_id=$request->art_id;
+    //   $type=$request->type;
+      $rating=$request->rating;
+      $comment=$request->comment;
+      $user_id= auth()->id();
+      $type='castomer';
+      $name=  auth()->user()->name;
+
+    $result=  Comment::create([
+          'art_id'=>$art_id,
+           'type'=>$type,
+           'rating'=>$rating,
+           'comment'=>$comment,
+           'user_id'=>$user_id,
+           'type'=>$type,
+           'type'=>$type,
+           'name'=>$name
+    ]);
+
+     return 1;
+
+
+
+
     }
 
     /**

@@ -26,6 +26,7 @@ class NewsController extends Controller
      */
     public function create()
     {
+
          return view('admin.news.form');
     }
 
@@ -46,6 +47,7 @@ class NewsController extends Controller
             'tittle' => $request->tittle,
             'description'=>$request->description
         ]);
+        toastr()->success('News created successfully', 'Success');
         return redirect()->route('admin.news.index');
     }
 
@@ -89,6 +91,7 @@ class NewsController extends Controller
             'tittle' => $request->tittle,
             'description'=>$request->description
         ]);
+        toastr()->success('News updated successfully', 'Success');
         return redirect()->route('admin.news.index');
     }
 
@@ -101,6 +104,7 @@ class NewsController extends Controller
     public function destroy(News $news)
     {
         $news->delete();
+        toastr()->success('News deleted successfully', 'Success');
         return redirect()->route('admin.news.index');
     }
 }

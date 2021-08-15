@@ -18,13 +18,14 @@ class CreateOrderItemsTable extends Migration
             $table->unsignedBigInteger('art_id');
             $table->unsignedBigInteger('order_id');
 
-            $table->foreign('art_id')->references('id')->on('art')->onDelete('cascade');
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
-
             $table->float('price');
             $table->integer('quantity');
+            $table->string('item_type');
+
 
             $table->timestamps();
+            $table->foreign('art_id')->references('id')->on('art')->onDelete('cascade');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
         });
     }
 

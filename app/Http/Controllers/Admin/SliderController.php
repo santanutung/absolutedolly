@@ -55,6 +55,7 @@ class SliderController extends Controller
             'name' => $request->sliders,
             'img'=>$imageName
         ]);
+        toastr()->success('Slider created successfully', 'Success');
         return redirect()->route('admin.sliders.index');
     }
 
@@ -110,7 +111,7 @@ class SliderController extends Controller
             'name' => $request->sliders,
             'img' => $imageName
         ]);
-
+        toastr()->success('Slider updated successfully', 'Success');
         return redirect()->route('admin.sliders.index');
     }
 
@@ -123,7 +124,7 @@ class SliderController extends Controller
     public function destroy(Slider $slider)
     {
         $slider->delete();
-        //
+         toastr()->success('Slider deleted successfully', 'Success');
         return redirect()->route('admin.sliders.index');
     }
 }

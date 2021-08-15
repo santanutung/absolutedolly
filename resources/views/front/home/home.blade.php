@@ -122,7 +122,7 @@
                     </div>
                     <div class="col-md-7">
                         <ul class="filter">
-                            <li><a class="active" href="#" data-filter="*">all</a></li>
+                            <li><a class="active" href="#" data-filter="*">All</a></li>
                             <li><a href="#" data-filter=".physical">Physical</a></li>
                             <li><a href="#" data-filter=".digital">Digital</a></li>
 

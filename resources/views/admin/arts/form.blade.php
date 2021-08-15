@@ -40,7 +40,6 @@
                                 @error('name')
                                     <span class="help-block">{{ $message }}</span>
                                 @enderror
-
                             </div>
                         </div>
                         <div class="form-group   @error('main_images') has-error @enderror"

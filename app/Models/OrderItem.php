@@ -8,9 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class OrderItem extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 
     public function art()
     {
+
         return $this->belongsTo(Art::class);
+        
     }
 }

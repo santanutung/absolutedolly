@@ -8,7 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Art extends Model
 {
     use HasFactory;
+
     protected $guarded = ['id'];
+
+
+
     public function catagorys()
     {
         return $this->belongsToMany(Category::class)->withTimestamps();
@@ -19,7 +23,12 @@ class Art extends Model
         return $this->belongsToMany(ExtraImages::class);
     }
 
-    
+     public function comments()
+    {
+        return $this->belongsTo(Comment::class,);
+    }
+
+
 
 
 }

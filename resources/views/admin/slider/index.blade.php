@@ -11,7 +11,6 @@
             </div>
         </div>
         <p></p>
-
         <div class="table-responsive">
             <table id="example-datatable" class="table table-vcenter table-condensed table-bordered">
                 <thead>

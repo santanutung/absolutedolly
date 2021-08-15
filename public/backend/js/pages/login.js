@@ -27,17 +27,17 @@ var Login = function() {
                 formReminder    = $('#form-reminder'),
                 formRegister    = $('#form-register');
 
-            $('#link-register-login').click(function(){
-                switchView(formLogin, formRegister, 'register');
-            });
+            // $('#link-register-login').click(function(){
+            //     switchView(formLogin, formRegister, 'register');
+            // });
 
-            $('#link-register').click(function(){
-                switchView(formRegister, formLogin, '');
-            });
+            // $('#link-register').click(function(){
+            //     switchView(formRegister, formLogin, '');
+            // });
 
-            $('#link-reminder-login').click(function(){
-                switchView(formLogin, formReminder, 'reminder');
-            });
+            // $('#link-reminder-login').click(function(){
+            //     switchView(formLogin, formReminder, 'reminder');
+            // });
 
             $('#link-reminder').click(function(){
                 switchView(formReminder, formLogin, '');

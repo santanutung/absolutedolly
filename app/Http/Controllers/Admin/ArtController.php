@@ -64,20 +64,20 @@ class ArtController extends Controller
         Art::create([
             "name" => $request->name,
             "description" => $request->description,
-            "item_id" => $request->item_id ?? 0,
-            "digital" => $request->digital ?? 0,
-            "physical" => $request->physical ?? 0,
-            "physical_instructions" => $request->physical_instructions ?? 0,
-            "digital_instructions" => $request->digital_instructions ?? 0,
-            "digital_art_price"  => $request->digital_art_price ?? 0,
-            "digital_art_dis" => $request->digital_art_dis ?? 0,
-            "digital_art_sell" => $request->digital_art_sell ?? 0,
-            "physical_art_price" => $request->physical_art_price ?? 0,
-            "physical_art_dis" => $request->physical_art_dis ?? 0,
-            "physical_art_sell" =>  $request->physical_art_sell ?? 0,
-            "size_physical" => $request->size_physical ?? 0,
-            "frame_color" => $request->frame_color ?? 0,
-            "materia_used_painting" => $request->materia_used_painting ?? 0,
+            "item_id" => 0,
+            "digital" => $request->digital ?? '',
+            "physical" => $request->physical ?? '',
+            "physical_instructions" => $request->physical_instructions ?? '',
+            "digital_instructions" => $request->digital_instructions ?? '',
+            "digital_art_price"  => $request->digital_art_price ?? '',
+            "digital_art_dis" => $request->digital_art_dis ?? '',
+            "digital_art_sell" => $request->digital_art_sell ?? '',
+            "physical_art_price" => $request->physical_art_price ?? '',
+            "physical_art_dis" => $request->physical_art_dis ?? '',
+            "physical_art_sell" =>  $request->physical_art_sell ?? '',
+            "size_physical" => $request->size_physical ?? '',
+            "frame_color" => $request->frame_color ?? '',
+            "materia_used_painting" => $request->materia_used_painting ?? '',
             "main_images" => $imageName,
 
         ]);
@@ -99,7 +99,7 @@ class ArtController extends Controller
         $extra_images_save_name = $extra_images_name ?? [0];
         $extra_images_save_name = implode(",", $extra_images_save_name);
 
-
+        toastr()->success('Art created successfully', 'Success');
         return redirect()->route('admin.arts.index');
     }
 
@@ -168,9 +168,7 @@ class ArtController extends Controller
 
                 $extra_image = $slug . '-' . time() . '.' . $image->extension();
                 $image->move(public_path('extra_image/art/'), $extra_image);
-
                  $extra_images_name[] = $extra_image ;
-
             }
         }
         // $extra_images_name = $extra_images_name ?? [0];
@@ -204,21 +202,21 @@ class ArtController extends Controller
         $art->update([
             "name" => $request->name,
             "description" => $request->description,
-            "item_id" => $request->item_id ?? 0,
-            "digital" => $request->digital ?? 0,
-            "physical" => $request->physical ?? 0,
-            "physical_instructions" => $request->physical_instructions ?? 0,
-            "digital_instructions" => $request->digital_instructions ?? 0,
-            "digital_art_price"  => $request->digital_art_price ?? 0,
-            "digital_art_dis" => $request->digital_art_dis ?? 0,
-            "digital_art_sell" => $request->digital_art_sell ?? 0,
-            "physical_art_price" => $request->physical_art_price ?? 0,
-            "physical_art_dis" => $request->physical_art_dis ?? 0,
-            "physical_art_sell" =>  $request->physical_art_sell ?? 0,
-            "size_physical" => $request->size_physical ?? 0,
-            "frame_color" => $request->frame_color ?? 0,
-            "materia_used_painting" => $request->materia_used_painting ?? 0,
-            "physical_art_delivery_time"=>$request->physical_art_delivery_time ?? 0,
+            "item_id" => 0,
+            "digital" => $request->digital ?? '',
+            "physical" => $request->physical ?? '',
+            "physical_instructions" => $request->physical_instructions ?? '',
+            "digital_instructions" => $request->digital_instructions ?? '',
+            "digital_art_price"  => $request->digital_art_price ?? '',
+            "digital_art_dis" => $request->digital_art_dis ?? '',
+            "digital_art_sell" => $request->digital_art_sell ?? '',
+            "physical_art_price" => $request->physical_art_price ?? '',
+            "physical_art_dis" => $request->physical_art_dis ?? '',
+            "physical_art_sell" =>  $request->physical_art_sell ?? '',
+            "size_physical" => $request->size_physical ?? '',
+            "frame_color" => $request->frame_color ?? '',
+            "materia_used_painting" => $request->materia_used_painting ?? '',
+            "physical_art_delivery_time"=>$request->physical_art_delivery_time ?? '',
             "main_images" => $imageName,
             "extra_images" => $extra_images_save_name
         ]);
@@ -226,7 +224,7 @@ class ArtController extends Controller
         //  $post->categories()->attach($request->categories);
 
 
-
+        toastr()->success('Art updated successfully', 'Success');
 
         return redirect()->route('admin.arts.index');
     }
@@ -242,6 +240,7 @@ class ArtController extends Controller
         $art->update([
             'deleted' => 1
         ]);
+        toastr()->success('Art deleted successfully', 'Success');
         return redirect()->route('admin.arts.index');
     }
 }

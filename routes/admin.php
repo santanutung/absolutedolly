@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use  App\Http\Controllers\Admin\SiteFontendSettingCommentsController as frontend;
 
 
 /*
@@ -26,10 +27,28 @@ Route::group(
         Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
 
 
+        Route::get('/footer', [frontend::class, 'footer_show'])->name('footer.footer_show');
+        Route::put('/footer', [frontend::class, 'footer_update'])->name('footer.footer_update');
+
+        Route::get('/contactpage', [frontend::class, 'contactpage_show'])->name('contactpage.setting');
+        Route::put('/contactpage', [frontend::class, 'contactpage_update'])->name('contactpage.setting');
+
+
+
+
+
+
         Route::resource('categories', CategoryController::class);
         Route::resource('arts', ArtController::class);
         Route::resource('sliders', SliderController::class);
         Route::resource('news', NewsController::class);
+        Route::resource('comments', CommentController::class);
+        Route::resource('orders', CustomerOrderOrdeController::class);
+        Route::resource('newcomments', CustomerCommentsController::class);
+
+
 
     }
 );
+
+
